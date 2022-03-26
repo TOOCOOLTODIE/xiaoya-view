@@ -6,6 +6,7 @@ import EditBlog from '@/components/blogmng/EditBlog'
 import BlogDetail from '@/components/blogmng/BlogDetail'
 import ListBlog from '@/components/blogmng/ListBlog'
 import Upload from '@/components/batchUpload/Upload'
+import QtzManager from "@/components/qtzMng/QtzManager";
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -45,6 +46,11 @@ export default new Router({
             path:'/upload',
             name:'upload',
             component:Upload
+        },
+        {
+          path:'/qtzMng',
+          name:'qtzMng',
+          component:QtzManager
         }
       ]
     }
