@@ -127,9 +127,7 @@
               <el-button type="warning" @click="handleUpdateBlog"
                 >提交</el-button
               >
-              <el-button type="info" @click="dealClose"
-                >关闭</el-button
-              >
+              <el-button type="info" @click="dealClose">关闭</el-button>
             </el-form>
           </el-dialog>
         </template>
@@ -222,7 +220,8 @@ export default {
       var _this = this;
       this.blog.userId = this.$store.state.user.id;
       this.blog.content = this.$refs.editor.myValue;
-      this.postRequest("/api/blog/updateBlog", this.blog).then(resp => {
+      this.blog.tags = this.blog.tags.toString;
+      this.postRequest("blog/updateBlog", this.blog).then(resp => {
         var status = resp.status;
         if (status == 200) {
           this.dialogTableVisible = false;
@@ -232,7 +231,7 @@ export default {
         }
       });
     },
-    dealClose(){
+    dealClose() {
       alert("closeed");
       this.dialogTableVisible = false;
     },
@@ -266,20 +265,17 @@ export default {
     },
     handleView(index, row) {
       var id = row.id;
-      this.$router.push({ path: "Detail/" + id });
+      this.$router.push({ path: "blog_detail/" + id });
     },
     loadBlogs() {
       var _this = this;
-      this.getRequest(
-        "/api/blog/listBlog?page=" +
-          this.currentPage +
-          "&size=" +
-          this.size +
-          "&keywords=" +
-          this.keyWords +
-          "&userId=" +
-          _this.$store.state.user.id
-      ).then(resp => {
+      var param = {
+        size: this.size,
+        page: this.currentPage,
+        keywords: this.keyWords,
+        userId: _this.$store.state.user.id
+      };
+      this.postRequest("blog/getAuthorBlogList", param).then(resp => {
         if (resp && resp.status == 200) {
           var data = resp.data;
           _this.totalCount = data.totalCount;
@@ -287,29 +283,30 @@ export default {
         }
       });
     },
-    handledelete(index,row){
-      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.deleteRequest("/api/blog/deleteOne?id=" + row.id).then(resp =>{
-          if(resp.status == 200){
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
-            //刷新博客列表
-            this.loadBlogs();
-          }
+    handledelete(index, row) {
+      this.$confirm("此操作将永久删除, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.deleteRequest("blog/delBlogById?id=" + row.id).then(resp => {
+            if (resp.status == 200) {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              //刷新博客列表
+              this.loadBlogs();
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
         });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-
     },
     currentChange(currentChange) {
       this.currentPage = currentChange;

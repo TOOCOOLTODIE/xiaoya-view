@@ -105,7 +105,7 @@ export default {
           type: "warning"
         })
           .then(() => {
-            _this.getRequest("/api/logout");
+            _this.getRequest("logout");
             _this.$store.commit("logout");
             _this.$router.replace({ path: "/" });
           })

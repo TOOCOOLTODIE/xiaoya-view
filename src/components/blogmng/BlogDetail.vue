@@ -19,7 +19,7 @@
     },
     methods: {
       init(){
-        this.getRequest("/api/blog/listDetail?id="+this.$route.params.id).then(resp=>{
+        this.getRequest("blog/getBlogInfoById?id="+this.$route.params.id).then(resp=>{
           var obj = resp.data;
           if(obj.status == 200){
             var blog = obj.obj;

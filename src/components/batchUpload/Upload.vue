@@ -43,7 +43,7 @@
             <el-upload
               drag
               ref="upload"
-              action="/api/batch/import"
+              action="batch/import"
               :limit="1"
               multiple
               accept=".xlsx,.xls"
@@ -182,7 +182,7 @@ export default {
       this.sortId = "";
       this.name = "";
       this.$refs.upload.clearFiles();
-      this.getRequest("/api/batch/getSorts").then(rept => {
+      this.getRequest("batch/getSorts").then(rept => {
         this.options = rept.data;
       });
     },
@@ -218,7 +218,7 @@ export default {
     }
   },
   mounted() {
-    this.getRequest("/api/batch/getModels").then(rept => {
+    this.getRequest("batch/getModels").then(rept => {
       this.data = rept.data;
     });
   },

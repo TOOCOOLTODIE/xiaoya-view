@@ -40,24 +40,25 @@ axios.interceptors.response.use(
     // return Promise.resolve(err);
   }
 );
-let base = "";
+// let base = "/api/xiaoya/"; // 生产环境
+let base = "/api/"; // 开发环境
 export const postRequest = (url, params) => {
   return axios({
     method: "post",
     url: `${base}${url}`,
     data: params,
-    transformRequest: [
-      function(data) {
-        let ret = "";
-        for (let it in data) {
-          ret +=
-            encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
-        }
-        return ret;
-      }
-    ],
+    // transformRequest: [
+    //   function(data) {
+    //     let ret = "";
+    //     for (let it in data) {
+    //       ret +=
+    //         encodeURIComponent(it) + "=" + encodeURIComponent(data[it]) + "&";
+    //     }
+    //     return ret;
+    //   }
+    // ],
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json" // axious默认的ContentType为application/json
     }
   });
 };

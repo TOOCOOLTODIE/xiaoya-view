@@ -184,7 +184,7 @@ export default {
         keyword: "task",
         userId: "luo"
       };
-      this.postRequest("/api/job/test", paramObj).then(resp => {
+      this.postRequest("job/test", paramObj).then(resp => {
         console.log("request success!");
       });
     },
@@ -193,10 +193,7 @@ export default {
     },
     loadQtzData() {
       this.getRequest(
-        "/api/job/queryjob?pageNum=" +
-          this.currentPage +
-          "&pageSize=" +
-          this.size
+        "job/queryjob?pageNum=" + this.currentPage + "&pageSize=" + this.size
       ).then(resp => {
         if (resp && resp.status === 200) {
           var data = resp.data;
@@ -235,7 +232,7 @@ export default {
         jobGroupName: this.form.jobGroupName,
         cronExpression: this.form.cronExpression
       };
-      this.postRequest("/api/job/addJob", addParam).then(resp => {
+      this.postRequest("job/addJob", JSON.stringify(this.form)).then(resp => {
         console.log("success!");
       });
     },

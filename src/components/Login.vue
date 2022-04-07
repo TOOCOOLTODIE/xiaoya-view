@@ -55,11 +55,10 @@ export default {
     submitClick() {
       var _this = this;
       this.loading = true;
-      var paramObj = {
-        name: this.loginForm.username,
-        password: this.loginForm.password
-      };
-      this.postRequest("/api/login", paramObj).then(resp => {
+      this.postRequest("login", {
+        name: "admin",
+        password: "123"
+      }).then(resp => {
         var data = resp.data;
         _this.loading = false;
         if (resp && data.status == 200) {
